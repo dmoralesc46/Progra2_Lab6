@@ -1,12 +1,12 @@
-package lab_api.demo.service;
+package lab_api.demo.libros.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import lab_api.demo.dto.request.BookRequest;
-import lab_api.demo.dto.response.BookResponse;
+import lab_api.demo.libros.dto.request.BookRequest;
+import lab_api.demo.libros.dto.response.BookResponse;
 
 @Service 
 public class BookService {
@@ -55,6 +55,11 @@ public class BookService {
         return newBook;
     }
 
+    public boolean deleteBook(Long id) {
+        //Elimina un libro de la lista por su id
+        return books.removeIf(book -> book.id().equals(id));
+    }
+    
     public BookResponse updateBook(Long id, BookRequest bookRequest) {
         //Actualiza un libro existente en la lista
         for (int i = 0; i < books.size(); i++) {

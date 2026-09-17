@@ -1,10 +1,11 @@
-package lab_api.demo.controller;
+package lab_api.demo.libros.controller;
 
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lab_api.demo.dto.request.BookRequest;
-import lab_api.demo.dto.response.BookResponse;
-import lab_api.demo.service.BookService;
+import lab_api.demo.libros.dto.request.BookRequest;
+import lab_api.demo.libros.dto.response.BookResponse;
+import lab_api.demo.libros.service.BookService;
 
 
 @RestController 
@@ -76,5 +77,18 @@ public class BookController {
             );
         }
         return ResponseEntity.ok(updatedBook);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable Long id) {
+        boolean deleted = bookService.deleteBook(id);
+        if (!deleted) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                Map.of(
+                    "mensaje", "El libro con ID " + id + " no fue encontrado",
+                    "codigo", 404
+                )
+            );
+        }
+        return ResponseEntity.ok(Map.of("mensaje", "Libro con ID " + id + " eliminado correctamente"));
     }
 }
