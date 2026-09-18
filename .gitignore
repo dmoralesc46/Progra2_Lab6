@@ -27,4 +27,4 @@ replay_pid*
 *.md
 mvnw
 *.cmd
-*.yaml
+.vscode
